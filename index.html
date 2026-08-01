@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>đang tải...</title>
+
+<style>
+body{
+margin:0;
+background:#f5f5f5;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
+
+.box{
+text-align:center;
+width:320px;
+}
+
+.bar{
+width:100%;
+height:18px;
+background:#ddd;
+border-radius:30px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.fill{
+width:0%;
+height:100%;
+background:#2b8cff;
+transition:.1s;
+}
+
+#text{
+margin-top:15px;
+color:#666;
+}
+
+#scare{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+justify-content:center;
+align-items:center;
+}
+
+#scare img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>đang tải ảnh...</h2>
+
+<div class="bar">
+<div class="fill" id="fill"></div>
+</div>
+
+<p id="percent">0%</p>
+<p id="text">đang kết nối máy chủ...</p>
+
+<button onclick="start()">bắt đầu</button>
+
+</div>
+
+<div id="scare">
+<img src="LINK_ANH_KINH_DI">
+
+<audio id="sound">
+<source src="LINK_AM_THANH.mp3">
+</audio>
+
+</div>
+
+<script>
+
+function start(){
+
+document.querySelector("button").style.display="none";
+
+let p=0;
+
+let t=setInterval(()=>{
+
+p++;
+
+if(p==25) text.innerHTML="đang xử lý...";
+if(p==60) text.innerHTML="đang tối ưu...";
+if(p==90) text.innerHTML="chuẩn bị hoàn tất...";
+
+if(p>=99){
+
+clearInterval(t);
+
+setTimeout(()=>{
+
+document.body.style.background="black";
+
+document.querySelector(".box").style.display="none";
+
+document.getElementById("scare").style.display="flex";
+
+document.documentElement.requestFullscreen?.();
+
+navigator.vibrate?.([300,150,300]);
+
+sound.play();
+
+},2000);
+
+}
+
+fill.style.width=p+"%";
+
+percent.innerHTML=p+"%";
+
+},60);
+
+}
+
+</script>
+
+</body>
+  </html>
